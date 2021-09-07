@@ -1,11 +1,12 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View,  SafeAreaView, StatusBar, ImageBackground } from 'react-native';
-import { useState } from 'react/cjs/react.production.min';
+import { useState } from 'react';
 import BeatSelector from './Components/BeatSelector';
 
 export default function App() {
-  const [selectedLead, setSelectedLead, selectedRythm, setSelectedRhythm] = useState(1) // TODO: store values and 
+  const [selectedLead, setSelectedLead] = useState(1) // TODO: store values and 
+  const [selectedRhythm, setSelectedRhythm] = useState(1)
   const leadCallback = (x) => {setSelectedLead(x)}
   const rhythmCallback = (x) => {setSelectedRhythm(x)}
   return (
@@ -17,8 +18,6 @@ export default function App() {
           <BeatSelector type='Rhythm Notes' callback={rhythmCallback}/>
           <Text style={styles.text}>{selectedLead} Lead Notes</Text>
           <Text style={styles.text}>{selectedRhythm} Rhythm Notes</Text>
-          {/* <Text>These are some words</Text> */}
-        {/* <StatusBar style="auto" /> */}
       </ImageBackground>
       </View>
     </View>
@@ -40,5 +39,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%'
+  },
+  text: {
+    color: '#b9b18e'
   }
 });
