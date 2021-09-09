@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeatSelector from './Components/BeatSelector';
 
@@ -29,6 +29,15 @@ function InputScreen() {
 }
 
 const Stack = createNativeStackNavigator();
+const MetronomeTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#242424',
+    text: '#b9b18e',
+    border: '#b9b18e'
+  }
+}
 
 export default function App() {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
@@ -40,7 +49,7 @@ export default function App() {
   const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
   return (
     <View style={{height: '100%'}}>
-      <NavigationContainer>
+      <NavigationContainer theme={MetronomeTheme}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="InputScreen" component={InputScreen} />
         </Stack.Navigator>
@@ -55,7 +64,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#242424',
+    // backgroundColor: '#242424',
     alignItems: 'center',
     justifyContent: 'center',
   },
