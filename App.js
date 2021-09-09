@@ -5,19 +5,22 @@ import { useState } from 'react';
 import BeatSelector from './Components/BeatSelector';
 
 export default function App() {
-  const [selectedLead, setSelectedLead] = useState(1) // TODO: store values and 
-  const [selectedRhythm, setSelectedRhythm] = useState(1)
-  const leadCallback = (x) => {setSelectedLead(x)}
-  const rhythmCallback = (x) => {setSelectedRhythm(x)}
+  const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
+  const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
+
+  const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
+
+  const leadCallback = (x) => {setSelectedLeadIndex(x)}
+  const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
   return (
     <View style={{height: '100%'}}>
       <StatusBar hidden={false} />
       <View style={styles.container}>
         <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
-          <BeatSelector type='Lead Notes' callback={leadCallback}/>
-          <BeatSelector type='Rhythm Notes' callback={rhythmCallback}/>
-          <Text style={styles.text}>{selectedLead} Lead Notes</Text>
-          <Text style={styles.text}>{selectedRhythm} Rhythm Notes</Text>
+          <BeatSelector type='Lead Notes' callback={leadCallback} numbers={numbers} />
+          <BeatSelector type='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
+          <Text style={styles.text}>{numbers[selectedLeadIndex]} Lead Notes</Text>
+          <Text style={styles.text}>{numbers[selectedRhythmIndex]} Rhythm Notes</Text>
       </ImageBackground>
       </View>
     </View>
