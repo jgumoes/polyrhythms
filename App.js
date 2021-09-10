@@ -1,12 +1,12 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
 import { useState } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeatSelector from './Components/BeatSelector';
 
-function InputScreen() {
+function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
 
@@ -19,10 +19,24 @@ function InputScreen() {
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <BeatSelector type='Lead Notes' callback={leadCallback} numbers={numbers} />
-        <Text style={styles.startButton}>start</Text>
+        <Button
+          style={styles.startButton}
+          title="Start"
+          onPress={() => navigation.navigate('PlayScreen')}
+        />
         <BeatSelector type='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
         <Text style={styles.text}>{numbers[selectedLeadIndex]} Lead Notes</Text>
         <Text style={styles.text}>{numbers[selectedRhythmIndex]} Rhythm Notes</Text>
+      </ImageBackground>
+    </View>
+  )
+}
+
+function PlayScreen() {
+  return(
+    <View style={styles.container}>
+      <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
+        <Text style={styles.text}>Someone should finish making this screen...</Text>
       </ImageBackground>
     </View>
   )
@@ -52,6 +66,7 @@ export default function App() {
       <NavigationContainer theme={MetronomeTheme}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="InputScreen" component={InputScreen} />
+          <Stack.Screen name="PlayScreen" component={PlayScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
