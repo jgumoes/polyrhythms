@@ -19,10 +19,11 @@ function InputScreen({navigation}) {
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <BeatSelector type='Lead Notes' callback={leadCallback} numbers={numbers} />
+        
         <Button
           style={styles.startButton}
           title="Start"
-          onPress={() => navigation.navigate('PlayScreen')}
+          onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
         />
         <BeatSelector type='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
         <Text style={styles.text}>{numbers[selectedLeadIndex]} Lead Notes</Text>
@@ -32,10 +33,13 @@ function InputScreen({navigation}) {
   )
 }
 
-function PlayScreen() {
+function PlayScreen({ route }) {
+  const { leadBeats, rhythmBeats } = route.params
   return(
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
+        <Text style={styles.text}>{leadBeats} Lead Beats</Text>
+        <Text style={styles.text}>{rhythmBeats} Rhythm Beats</Text>
         <Text style={styles.text}>Someone should finish making this screen...</Text>
       </ImageBackground>
     </View>
