@@ -1,14 +1,16 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, Button } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Button, Modal } from 'react-native';
 import { useState } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeatSelector from './Components/BeatSelector';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
+  const [bpmModalVisable, setBpmModalVisable] = useState(false)
 
   const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
 
@@ -19,12 +21,26 @@ function InputScreen({navigation}) {
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <BeatSelector type='Lead Notes' callback={leadCallback} numbers={numbers} />
-        
-        <Button
-          style={styles.startButton}
-          title="Start"
-          onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
-        />
+        <View style={styles.centerConsole}>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={bpmModalVisable}
+            onRequestClose={() => {setBpmModalVisable(!bpmModalVisable)}}
+          >
+            <Text style={styles.text}>there should probably be a thing here or something</Text>
+          </Modal>
+          <Button
+            style={styles.startButton}
+            title="Tempo"
+            onPress={() => setBpmModalVisable(!bpmModalVisable)}
+          />
+          <Button
+            style={styles.startButton}
+            title="Start"
+            onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
+          />
+        </View>
         <BeatSelector type='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
         <Text style={styles.text}>{numbers[selectedLeadIndex]} Lead Notes</Text>
         <Text style={styles.text}>{numbers[selectedRhythmIndex]} Rhythm Notes</Text>
@@ -100,6 +116,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: '#b9b18e',
+    marginVertical: '5px',
+    paddingVertical: '5px',
     // borderRadius: '50%'
+  },
+  centerConsole: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%"
   }
 });
