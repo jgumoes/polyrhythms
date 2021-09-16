@@ -6,6 +6,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeatSelector from './Components/BeatSelector';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import CircleButton from './Components/CircleButton';
 
 function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
@@ -29,13 +30,15 @@ function InputScreen({navigation}) {
             onRequestClose={() => {setBpmModalVisable(!bpmModalVisable)}}
           >
             <Text style={styles.text}>there should probably be a thing here or something</Text>
+            <Text style={styles.text}>Maybe a slider styled after a metronome, with a 
+            bronze sliding tab and a static windowed nut?</Text>
           </Modal>
-          <Button
+          <CircleButton
             style={styles.startButton}
             title="Tempo"
             onPress={() => setBpmModalVisable(!bpmModalVisable)}
           />
-          <Button
+          <CircleButton
             style={styles.startButton}
             title="Start"
             onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
@@ -107,7 +110,8 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%'
+    width: '100%',
+    height: '100%'
   },
   text: {
     color: '#b9b18e'
@@ -118,7 +122,6 @@ const styles = StyleSheet.create({
     color: '#b9b18e',
     marginVertical: '5px',
     paddingVertical: '5px',
-    // borderRadius: '50%'
   },
   centerConsole: {
     flexDirection: "row",
