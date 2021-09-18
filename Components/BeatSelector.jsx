@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import SmoothPicker from "react-native-smooth-picker";
 
-export default function BeatSelector({type, callback, numbers}) {
-  const [selectedIndex, setSelectedIndex] = useState(1);
-  console.log(type)
+export default function BeatSelector({title, callback, numbers, initialIndex = 1}) {
+  const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   function handleChange (props) {
     setSelectedIndex(props.index);
     callback(props.index)
@@ -18,12 +17,12 @@ export default function BeatSelector({type, callback, numbers}) {
       <Text style={componentStyle} selected={selected} >{item}</Text>
     );
   };
-  
+  console.log(`${title} initial index: ${initialIndex}`)
   // FIXME: the "SmoothPicker" isn't very smooth and is actually quite janky.
   // Maybe look for (or create) an alternative?
   return(
     <View style={styles.container}>
-      <Text style={styles.itemText}>{type}</Text>
+      <Text style={styles.itemText}>{title}</Text>
       <SmoothPicker
         // style={{alignItems: 'center', justifyContent: 'center'}}
         initialScrollToIndex={selectedIndex}

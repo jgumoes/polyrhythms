@@ -12,16 +12,18 @@ function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
   const [bpmModalVisable, setBpmModalVisable] = useState(false)
+  const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
 
   const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
-
+  const tempos = [...Array(100).keys()].map(x => x + 50)
   const leadCallback = (x) => {setSelectedLeadIndex(x)}
   const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
+  const tempoCallback = (x) => {setSelectedTempoIndex(x)}
 
   return(
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
-        <BeatSelector type='Lead Notes' callback={leadCallback} numbers={numbers} />
+        <BeatSelector title='Lead Notes' callback={leadCallback} numbers={numbers} />
         <View style={styles.centerConsole}>
           <Modal
             animationType="fade"
@@ -29,9 +31,20 @@ function InputScreen({navigation}) {
             visible={bpmModalVisable}
             onRequestClose={() => {setBpmModalVisable(!bpmModalVisable)}}
           >
-            <Text style={styles.text}>there should probably be a thing here or something</Text>
-            <Text style={styles.text}>Maybe a slider styled after a metronome, with a 
-            bronze sliding tab and a static windowed nut?</Text>
+            <View style={styles.bpmModal}>
+              <Text style={styles.text}>there should probably be a thing here or something</Text>
+              <Text style={styles.text}>Maybe a slider styled after a metronome, with a 
+              bronze sliding tab and a static windowed nut?</Text>
+              <BeatSelector
+                title="Tempo (BPM)"
+                callback={tempoCallback}
+                numbers={tempos}
+                initialIndex={selectedTempoIndex}
+              />
+              {/* TODO: Replace BeatSelector with a stylised metronome-like input*/}
+              {/* TODO: react seems to struggle with such a large list of numbers.
+                What are the implications for a custom picker component? */}
+            </View>
           </Modal>
           <CircleButton
             style={styles.startButton}
@@ -44,7 +57,7 @@ function InputScreen({navigation}) {
             onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
           />
         </View>
-        <BeatSelector type='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
+        <BeatSelector title='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
         <Text style={styles.text}>{numbers[selectedLeadIndex]} Lead Notes</Text>
         <Text style={styles.text}>{numbers[selectedRhythmIndex]} Rhythm Notes</Text>
       </ImageBackground>
@@ -127,5 +140,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     width: "100%"
+  },
+  bpmModal: {
+    backgroundColor: "#000000",
+    // opacity: 0.5,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
   }
 });
