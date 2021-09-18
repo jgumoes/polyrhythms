@@ -17,7 +17,8 @@ export default function BeatSelector({title, callback, numbers, initialIndex = 1
       <Text style={componentStyle} selected={selected} >{item}</Text>
     );
   };
-  console.log(`${title} initial index: ${initialIndex}`)
+
+  console.log(`${title} initial index: ${initialIndex}`)  // FIXME: this log suggests that interacting with the slider causes the entire page to re-render, not just the component
   // FIXME: the "SmoothPicker" isn't very smooth and is actually quite janky.
   // Maybe look for (or create) an alternative?
   return(
