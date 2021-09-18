@@ -9,7 +9,7 @@ import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import CircleButton from './Components/CircleButton';
 
 function InputScreen({navigation}) {
-  const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
+  const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values persistantly and recall them on startup
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
   const [bpmModalVisable, setBpmModalVisable] = useState(false)
   const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
@@ -54,7 +54,11 @@ function InputScreen({navigation}) {
           <CircleButton
             style={styles.startButton}
             title="Start"
-            onPress={() => navigation.navigate('PlayScreen', {leadBeats: numbers[selectedLeadIndex], rhythmBeats: numbers[selectedRhythmIndex] })}
+            onPress={() => navigation.navigate('PlayScreen', {
+              leadBeats: numbers[selectedLeadIndex],
+              rhythmBeats: numbers[selectedRhythmIndex],
+              tempo: tempos[selectedTempoIndex]
+            })}
           />
         </View>
         <BeatSelector title='Rhythm Notes' callback={rhythmCallback} numbers={numbers}/>
@@ -66,12 +70,13 @@ function InputScreen({navigation}) {
 }
 
 function PlayScreen({ route }) {
-  const { leadBeats, rhythmBeats } = route.params
+  const { leadBeats, rhythmBeats, tempo } = route.params
   return(
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <Text style={styles.text}>{leadBeats} Lead Beats</Text>
         <Text style={styles.text}>{rhythmBeats} Rhythm Beats</Text>
+        <Text style={styles.text}>{tempo} BPM</Text>
         <Text style={styles.text}>Someone should finish making this screen...</Text>
       </ImageBackground>
     </View>
