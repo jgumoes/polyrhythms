@@ -1,14 +1,11 @@
 // import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, Button, Modal } from 'react-native';
-import { useState } from 'react';
+import { Text, View, ImageBackground, BackHandler } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BeatSelector from './Components/BeatSelector';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import CircleButton from './Components/CircleButton';
 import InputScreen from './Screens/InputScreen';
 import { styles } from './styles.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 function PlayScreen({ route }) {
   const { leadBeats, rhythmBeats, tempo } = route.params
@@ -24,32 +21,34 @@ function PlayScreen({ route }) {
   )
 }
 
-const Stack = createNativeStackNavigator();
-const MetronomeTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: '#242424',
-    text: '#b9b18e',
-    border: '#b9b18e'
-  }
+const Stack = createNativeStackNavigator(
+  // {transparentCard: true}
+);
+
+function WrappedScreen(props) {
+  return(
+    <View style={[styles.container, {backgroundColor: '#242424'}]}>
+      <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
+        {props.children}
+      </ImageBackground>
+    </View>
+  )
 }
 
 export default function App() {
-  const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values and 
-  const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
 
-  const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
-
-  const leadCallback = (x) => {setSelectedLeadIndex(x)}
-  const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
+  const wrappedInputScreen = (props) =>{ console.log("wrappedInputScreen" + props); return(<WrappedScreen><InputScreen props={props} /></WrappedScreen>)}
+  const wrappedPlayScreen = (props) => { console.log("wrappedPlayScreen" + props.name); return(<WrappedScreen><PlayScreen props={props} /></WrappedScreen>)}
   return (
     <View style={{height: '100%'}}>
-      <NavigationContainer theme={MetronomeTheme}>
+      <SafeAreaView />
+      <NavigationContainer>
+      {/* <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" > */}
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="InputScreen" component={InputScreen} />
           <Stack.Screen name="PlayScreen" component={PlayScreen} />
         </Stack.Navigator>
+      {/* </ImageBackground> */}
       </NavigationContainer>
     </View>
   );
