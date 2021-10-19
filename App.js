@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';

@@ -1,5 +1,6 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
-import { Text, View, ImageBackground, Modal } from 'react-native';
+import { Text, View, ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,11 +8,11 @@ import BeatSelector from '../Components/BeatSelector';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import CircleButton from '../Components/CircleButton';
 import { styles } from '../styles.js';
+import BPMInputButton from '../Components/BPMInputButton';
 
 export default function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values persistantly and recall them on startup
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
-  const [bpmModalVisable, setBpmModalVisable] = useState(false)
   const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
 
   const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
@@ -25,32 +26,7 @@ export default function InputScreen({navigation}) {
       <ImageBackground source={require('../assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <BeatSelector title='Lead Notes' callback={leadCallback} numbers={numbers} />
         <View style={styles.centerConsole}>
-          <Modal
-            animationType="fade"
-            transparent={true}
-            visible={bpmModalVisable}
-            onRequestClose={() => {setBpmModalVisable(!bpmModalVisable)}}
-          >
-            <View style={styles.bpmModal}>
-              <Text style={styles.text}>there should probably be a thing here or something</Text>
-              <Text style={styles.text}>Maybe a slider styled after a metronome, with a 
-              bronze sliding tab and a static windowed nut?</Text>
-              <BeatSelector
-                title="Tempo (BPM)"
-                callback={tempoCallback}
-                numbers={tempos}
-                initialIndex={selectedTempoIndex}
-              />
-              {/* TODO: Replace BeatSelector with a stylised metronome-like input*/}
-              {/* TODO: react seems to struggle with such a large list of numbers.
-                What are the implications for a custom picker component? */}
-            </View>
-          </Modal>
-          <CircleButton
-            style={styles.startButton}
-            title="Tempo"
-            onPress={() => setBpmModalVisable(!bpmModalVisable)}
-          />
+          <BPMInputButton />
           <CircleButton
             style={styles.startButton}
             title="Start"
