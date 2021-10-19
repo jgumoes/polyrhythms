@@ -2,10 +2,7 @@
 import React from 'react'
 import { Text, View, ImageBackground } from 'react-native';
 import { useState } from 'react';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BeatSelector from '../Components/BeatSelector';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import CircleButton from '../Components/CircleButton';
 import { styles } from '../styles.js';
 import BPMInputButton from '../Components/BPMInputButton';
@@ -19,7 +16,7 @@ export default function InputScreen({navigation}) {
   const tempos = [...Array(100).keys()].map(x => x + 50)
   const leadCallback = (x) => {setSelectedLeadIndex(x)}
   const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
-  const tempoCallback = (x) => {setSelectedTempoIndex(x)}
+  // const tempoCallback = (x) => {setSelectedTempoIndex(x)}
 
   return(
     <View style={styles.container}>

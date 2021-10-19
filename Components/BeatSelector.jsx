@@ -1,13 +1,14 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import SmoothPicker from "react-native-smooth-picker";
 
 export default function BeatSelector({title, callback, numbers, initialIndex = 1}) {
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
-  function handleChange (props) {
-    setSelectedIndex(props.index);
-    callback(props.index)
-  };
+  function handleChange ({ index }) {
+    setSelectedIndex(index);
+    callback(index)
+  }
 
   const renderItem = ({item, index}) => {
     const selected = index === selectedIndex;
@@ -38,7 +39,14 @@ export default function BeatSelector({title, callback, numbers, initialIndex = 1
       />
     </View>
   );
-};
+}
+
+BeatSelector.propTypes = {
+  title: PropTypes.string,
+  callback: PropTypes.func,
+  numbers: PropTypes.array,
+  initialIndex: PropTypes.number
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,11 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, Dimensions } from "react-native";
+import PropTypes from 'prop-types'
+
+CircleButton.propTypes = {
+  title: PropTypes.string,
+  onPress: PropTypes.func
+}
 
 export default function CircleButton({title, onPress}){
   const screenWidth = Math.round(Dimensions.get("window").width);
