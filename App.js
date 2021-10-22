@@ -6,9 +6,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import InputScreen from './Screens/InputScreen';
 import { styles } from './styles.js';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { observer } from 'mobx-react-lite';
+import { beats } from './lib/MSTStore';
 
-function PlayScreen({ route }) {
-  const { leadBeats, rhythmBeats, tempo } = route.params
+const PlayScreen = observer(props => {
+  const { leadBeats, rhythmBeats } = props.route.params
+  var tempo = beats.tempo
   return(
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
@@ -19,7 +22,7 @@ function PlayScreen({ route }) {
       </ImageBackground>
     </View>
   )
-}
+})
 
 const Stack = createNativeStackNavigator(
   // {transparentCard: true}

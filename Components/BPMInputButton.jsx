@@ -1,5 +1,6 @@
 import React, { useState} from "react"
 import { Modal, View, Text } from "react-native"
+import { beats } from "../lib/MSTStore.js";
 import { styles } from '../styles.js';
 import BeatSelector from "./BeatSelector.jsx";
 import CircleButton from "./CircleButton.jsx";
@@ -8,9 +9,11 @@ export default function BPMInputButton(){
   const [bpmModalVisable, setBpmModalVisable] = useState(false)
   const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
 
-  const tempoCallback = (x) => {setSelectedTempoIndex(x)}
+  
   const tempos = [...Array(100).keys()].map(x => x + 50)
-
+  
+  // const tempoCallback = (x) => {setSelectedTempoIndex(x)}
+  const tempoCallback = (x) => { beats.setValue("tempo", tempos[x]) }
 
   return(
     <>

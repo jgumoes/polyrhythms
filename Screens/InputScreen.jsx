@@ -6,6 +6,7 @@ import BeatSelector from '../Components/BeatSelector';
 import CircleButton from '../Components/CircleButton';
 import { styles } from '../styles.js';
 import BPMInputButton from '../Components/BPMInputButton';
+import { beats } from '../lib/MSTStore';
 
 export default function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values persistantly and recall them on startup
