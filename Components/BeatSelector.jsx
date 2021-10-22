@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import SmoothPicker from "react-native-smooth-picker";
+import { beats, inputValues } from '../lib/MSTStore';
 
-export default function BeatSelector({title, callback, numbers, initialIndex = 1}) {
+export default function BeatSelector({title, valueName}) {
+  const initialIndex = beats[valueName]
   const [selectedIndex, setSelectedIndex] = useState(initialIndex);
   function handleChange ({ index }) {
     setSelectedIndex(index);
-    callback(index)
+    beats.setIndex(valueName, index)
   }
 
   const renderItem = ({item, index}) => {
@@ -19,7 +21,7 @@ export default function BeatSelector({title, callback, numbers, initialIndex = 1
     );
   };
 
-  console.log(`${title} initial index: ${initialIndex}`)  // FIXME: this log suggests that interacting with the slider causes the entire page to re-render, not just the component
+  // console.log(`${title} initial index: ${initialIndex}`)  // FIXME: this log suggests that interacting with the slider causes the entire page to re-render, not just the component
   // FIXME: the "SmoothPicker" isn't very smooth and is actually quite janky.
   // Maybe look for (or create) an alternative?
   return(
@@ -33,7 +35,7 @@ export default function BeatSelector({title, callback, numbers, initialIndex = 1
         scrollAnimation={false}
         showsHorizontalScrollIndicator={false}
         magnet
-        data={numbers}
+        data={inputValues[valueName]}
         onSelected={(option) => handleChange(option)}
         renderItem={option => renderItem(option)}
       />
@@ -43,9 +45,7 @@ export default function BeatSelector({title, callback, numbers, initialIndex = 1
 
 BeatSelector.propTypes = {
   title: PropTypes.string,
-  callback: PropTypes.func,
-  numbers: PropTypes.array,
-  initialIndex: PropTypes.number
+  valueName: PropTypes.string
 }
 
 const styles = StyleSheet.create({
