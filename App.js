@@ -11,13 +11,12 @@ import { beats } from './lib/MSTStore';
 
 const PlayScreen = observer(props => {
   const { leadBeats, rhythmBeats } = props.route.params
-  var tempo = beats.tempo
   return(
     <View style={styles.container}>
       <ImageBackground source={require('./assets/Wood-Grain-Texture.png')} style={styles.background} resizeMode="cover" >
         <Text style={styles.text}>{leadBeats} Lead Beats</Text>
         <Text style={styles.text}>{rhythmBeats} Rhythm Beats</Text>
-        <Text style={styles.text}>{tempo} BPM</Text>
+        <Text style={styles.text}>{beats.getValue("tempo")} BPM</Text>
         <Text style={styles.text}>Someone should finish making this screen...</Text>
       </ImageBackground>
     </View>

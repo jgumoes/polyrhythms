@@ -6,15 +6,15 @@ import BeatSelector from '../Components/BeatSelector';
 import CircleButton from '../Components/CircleButton';
 import { styles } from '../styles.js';
 import BPMInputButton from '../Components/BPMInputButton';
-import { beats } from '../lib/MSTStore';
+// import { beats } from '../lib/MSTStore';
 
 export default function InputScreen({navigation}) {
   const [selectedLeadIndex, setSelectedLeadIndex] = useState(1) // TODO: store values persistantly and recall them on startup
   const [selectedRhythmIndex, setSelectedRhythmIndex] = useState(1)
-  const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
+  // const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
 
   const numbers = [2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 22]; // TODO: this needs to be different for rhythm and lead, and needs to be mutable so that the user can add values
-  const tempos = [...Array(100).keys()].map(x => x + 50)
+  // const tempos = [...Array(100).keys()].map(x => x + 50)
   const leadCallback = (x) => {setSelectedLeadIndex(x)}
   const rhythmCallback = (x) => {setSelectedRhythmIndex(x)}
   // const tempoCallback = (x) => {setSelectedTempoIndex(x)}
@@ -30,8 +30,8 @@ export default function InputScreen({navigation}) {
             title="Start"
             onPress={() => navigation.navigate('PlayScreen', {
               leadBeats: numbers[selectedLeadIndex],
-              rhythmBeats: numbers[selectedRhythmIndex],
-              tempo: tempos[selectedTempoIndex]
+              rhythmBeats: numbers[selectedRhythmIndex]
+              // tempo: tempos[selectedTempoIndex]
             })}
           />
         </View>

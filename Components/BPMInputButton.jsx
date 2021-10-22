@@ -7,13 +7,11 @@ import CircleButton from "./CircleButton.jsx";
 
 export default function BPMInputButton(){
   const [bpmModalVisable, setBpmModalVisable] = useState(false)
-  const [selectedTempoIndex, setSelectedTempoIndex] = useState(50)
-
   
   const tempos = [...Array(100).keys()].map(x => x + 50)
   
   // const tempoCallback = (x) => {setSelectedTempoIndex(x)}
-  const tempoCallback = (x) => { beats.setValue("tempo", tempos[x]) }
+  const tempoCallback = (i) => { beats.setIndex("tempo", i) }
 
   return(
     <>
@@ -31,7 +29,7 @@ export default function BPMInputButton(){
           title="Tempo (BPM)"
           callback={tempoCallback}
           numbers={tempos}
-          initialIndex={selectedTempoIndex} />
+          initialIndex={beats.tempo} />
         {/* TODO: Replace BeatSelector with a stylised metronome-like input*/}
         {/* TODO: react seems to struggle with such a large list of numbers.
                   What are the implications for a custom picker component? */}
